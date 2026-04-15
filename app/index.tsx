@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'expo-router';
 import { StyleSheet, Text, View, TouchableOpacity, ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { StatusBar } from 'expo-status-bar';
@@ -62,15 +63,19 @@ export default function App() {
 
       {/* Footer - Atividade e Água */}
       <View style={styles.footer}>
-        <TouchableOpacity style={styles.footerItem}>
-          <FontAwesome5 name="dumbbell" size={28} color="black" />
-          <Text style={styles.footerText}>ATIVIDADE</Text>
-        </TouchableOpacity>
+        {/* <Link href="" asChild> */}
+          <TouchableOpacity style={styles.footerItem}>
+            <FontAwesome5 name="dumbbell" size={28} color="black" />
+            <Text style={styles.footerText}>ATIVIDADE</Text>
+          </TouchableOpacity>
+        {/* </Link> */}
         <View style={styles.divider} />
-        <TouchableOpacity style={styles.footerItem}>
-          <Ionicons name="water-outline" size={30} color="black" />
-          <Text style={styles.footerText}>ÁGUA</Text>
-        </TouchableOpacity>
+        {/* <Link href="" asChild> */}
+          <TouchableOpacity style={styles.footerItem}>
+            <Ionicons name="water-outline" size={30} color="black" />
+            <Text style={styles.footerText}>ÁGUA</Text>
+          </TouchableOpacity>
+        {/* </Link> */}
       </View>
     </SafeAreaView>
   );
