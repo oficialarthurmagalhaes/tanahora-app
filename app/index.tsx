@@ -10,7 +10,7 @@ export default function App() {
     <SafeAreaView style={styles.container}>
       <StatusBar style="auto" />
       
-      {/* Header - Saudação e SOS */}
+      {/* Cabeçalho - Saudação e SOS */}
       <View style={styles.header}>
         <TouchableOpacity style={styles.sosButton}>
           <Text style={styles.sosText}>SOS</Text>
@@ -29,15 +29,16 @@ export default function App() {
 
       <Text style={styles.subGreeting}>Olá, Eva! Tudo pronto para hoje?</Text>
 
-      {/* Lista de Opções Principais */}
+      {/* Menu Principal */}
       <ScrollView contentContainerStyle={styles.menuList}>
-        <MenuButton 
+        <Link href={"/cadastro_remedio"}>
+        <MenuButton
           title="MEUS REMÉDIOS" 
           subtitle="Horários e doses para tomar." 
           icon="pill" 
           color="#E1F5FE"
           iconColor="#0288D1"
-        />
+        /></Link>
         <MenuButton 
           title="MINHAS RECEITAS" 
           subtitle="Suas prescrições e contatos médicos." 
@@ -61,7 +62,7 @@ export default function App() {
         />
       </ScrollView>
 
-      {/* Footer - Atividade e Água */}
+      {/* Rodapé - Atividade Física e Média de Água */}
       <View style={styles.footer}>
         {/* <Link href="" asChild> */}
           <TouchableOpacity style={styles.footerItem}>
@@ -158,6 +159,7 @@ const styles = StyleSheet.create({
     paddingBottom: 100,
   },
   card: {
+    display: 'flex',
     flexDirection: 'row',
     backgroundColor: 'white',
     borderRadius: 20,
