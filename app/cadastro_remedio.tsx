@@ -1,13 +1,45 @@
 import React, { useState } from 'react';
 import { Link } from 'expo-router';
-import { StyleSheet, Text, View, TouchableOpacity, ScrollView, TextInput } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, ScrollView, TextInput, Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { StatusBar } from 'expo-status-bar';
 import { MaterialCommunityIcons, FontAwesome5, Ionicons } from '@expo/vector-icons';
 
+// Importe a configuração do Firebase
+import { db } from './config/firebaseConfig'; 
+import { collection, addDoc } from "firebase/firestore";
 
 export default function App() {
-    const [text, setText] = useState('');
+// 1. Estados separados para cada campo
+  const [nome, setNome] = useState('');
+  const [dosagem, setDosagem] = useState('');
+  const [intervalo, setIntervalo] = useState('');
+
+  // 2. Função para salvar no Firebase
+  const handleCadastro = async () => {
+    if (!nome || !dosagem || !intervalo) {
+      Alert.alert("Erro", "Preencha todos os campos!");
+      return;
+    }
+
+    try {
+      await addDoc(collection(db, "medicamentos"), {
+        nome: nome,
+        dosagem: dosagem,
+        intervalo: intervalo,
+        createdAt: new Date()
+      });
+      
+      Alert.alert("Sucesso", "Medicamento cadastrado!");
+      // Limpar campos
+      setNome('');
+      setDosagem('');
+      setIntervalo('');
+    } catch (e) {
+      console.error("Erro ao adicionar: ", e);
+      Alert.alert("Erro", "Não foi possível salvar o medicamento.");
+    }
+  };
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar style="auto" />
@@ -25,22 +57,22 @@ export default function App() {
         <TextInput
             style={styles.input}
             placeholder="Ex: Dipirona"
-            onChangeText={newText => setText(newText)}
-            defaultValue={""}
+            value={nome}
+            onChangeText={setNome} // Atualiza o estado nome
         />
         <Text style={styles.label}>DOSAGEM</Text>
         <TextInput
             style={styles.input}
             placeholder="Ex: 20mg"
-            onChangeText={newText => setText(newText)}
-            defaultValue={""}
+            value={dosagem}
+            onChangeText={setDosagem} // Atualiza o estado dosagem
         />
         <Text style={styles.label}>INTERVALO</Text>
         <TextInput
             style={styles.input}
             placeholder="Ex: De 8 em 8 horas"
-            onChangeText={newText => setText(newText)}
-            defaultValue={""}
+            value={intervalo}
+            onChangeText={setIntervalo} // Atualiza o estado intervalo
         />
         <TouchableOpacity style={styles.buttonCadastrar}>
             <Text style={styles.text}>CADASTRAR MEDICAMENTO</Text>
