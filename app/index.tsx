@@ -36,7 +36,7 @@ export default function App() {
           icon="pill"
           color="#E1F5FE"
           iconColor="#0288D1"
-          href="/cadastro_remedio"
+          href="/cadastro-remedio"
         />
         <MenuButton
           title="MINHAS RECEITAS"
