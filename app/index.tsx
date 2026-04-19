@@ -1,29 +1,39 @@
-import React from 'react';
-import { Link } from 'expo-router';
-import { StyleSheet, Text, View, TouchableOpacity, ScrollView } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context'
-import { StatusBar } from 'expo-status-bar';
-import { MaterialCommunityIcons, FontAwesome5, Ionicons } from '@expo/vector-icons';
+import {
+  FontAwesome5,
+  Ionicons,
+  MaterialCommunityIcons,
+} from "@expo/vector-icons";
+import { useRouter } from "expo-router";
+import { StatusBar } from "expo-status-bar";
+import React from "react";
+import {
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function App() {
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar style="auto" />
-      
+
       {/* Cabeçalho - Saudação e SOS */}
       <View style={styles.header}>
         <TouchableOpacity style={styles.sosButton}>
           <Text style={styles.sosText}>SOS</Text>
           <MaterialCommunityIcons name="plus-circle" size={24} color="white" />
         </TouchableOpacity>
-        
+
         <View style={styles.greetingContainer}>
           <Text style={styles.greetingTitle}>Bom Dia,</Text>
           <Text style={styles.userName}>Eva!</Text>
         </View>
 
         <View style={styles.avatarPlaceholder}>
-           <FontAwesome5 name="user-circle" size={60} color="#D1D1D1" />
+          <FontAwesome5 name="user-circle" size={60} color="#D1D1D1" />
         </View>
       </View>
 
@@ -31,32 +41,32 @@ export default function App() {
 
       {/* Menu Principal */}
       <ScrollView contentContainerStyle={styles.menuList}>
-        <Link href={"/cadastro_remedio"}>
         <MenuButton
-          title="MEUS REMÉDIOS" 
-          subtitle="Horários e doses para tomar." 
-          icon="pill" 
+          title="MEUS REMÉDIOS"
+          subtitle="Horários e doses para tomar."
+          icon="pill"
           color="#E1F5FE"
           iconColor="#0288D1"
-        /></Link>
-        <MenuButton 
-          title="MINHAS RECEITAS" 
-          subtitle="Suas prescrições e contatos médicos." 
-          icon="file-document-outline" 
+          href="/cadastro_remedio"
+        />
+        <MenuButton
+          title="MINHAS RECEITAS"
+          subtitle="Suas prescrições e contatos médicos."
+          icon="file-document-outline"
           color="#E8F5E9"
           iconColor="#388E3C"
         />
-        <MenuButton 
-          title="CALENDÁRIO" 
-          subtitle="Próximas consultas e lembretes." 
-          icon="calendar-month" 
+        <MenuButton
+          title="CALENDÁRIO"
+          subtitle="Próximas consultas e lembretes."
+          icon="calendar-month"
           color="#FFF9C4"
           iconColor="#FBC02D"
         />
-        <MenuButton 
-          title="FALAR COM ATENDENTE" 
-          subtitle="Dúvidas e ajuda em tempo real." 
-          icon="headset" 
+        <MenuButton
+          title="FALAR COM ATENDENTE"
+          subtitle="Dúvidas e ajuda em tempo real."
+          icon="headset"
           color="#F3E5F5"
           iconColor="#7B1FA2"
         />
@@ -65,17 +75,17 @@ export default function App() {
       {/* Rodapé - Atividade Física e Média de Água */}
       <View style={styles.footer}>
         {/* <Link href="" asChild> */}
-          <TouchableOpacity style={styles.footerItem}>
-            <FontAwesome5 name="dumbbell" size={28} color="black" />
-            <Text style={styles.footerText}>ATIVIDADE</Text>
-          </TouchableOpacity>
+        <TouchableOpacity style={styles.footerItem}>
+          <FontAwesome5 name="dumbbell" size={28} color="black" />
+          <Text style={styles.footerText}>ATIVIDADE</Text>
+        </TouchableOpacity>
         {/* </Link> */}
         <View style={styles.divider} />
         {/* <Link href="" asChild> */}
-          <TouchableOpacity style={styles.footerItem}>
-            <Ionicons name="water-outline" size={30} color="black" />
-            <Text style={styles.footerText}>ÁGUA</Text>
-          </TouchableOpacity>
+        <TouchableOpacity style={styles.footerItem}>
+          <Ionicons name="water-outline" size={30} color="black" />
+          <Text style={styles.footerText}>ÁGUA</Text>
+        </TouchableOpacity>
         {/* </Link> */}
       </View>
     </SafeAreaView>
@@ -83,46 +93,70 @@ export default function App() {
 }
 
 // Componente de Botão Customizado
-const MenuButton = ({ title, subtitle, icon, color, iconColor }: { title: string; subtitle: string; icon: keyof typeof MaterialCommunityIcons.glyphMap; color: string; iconColor: string; }) => (
-  <TouchableOpacity style={styles.card}>
-    <View style={[styles.iconContainer, { backgroundColor: color }]}>
-      <MaterialCommunityIcons name={icon} size={40} color={iconColor} />
-    </View>
-    <View style={styles.cardTextContainer}>
-      <Text style={styles.cardTitle}>{title}</Text>
-      <Text style={styles.cardSubtitle}>{subtitle}</Text>
-    </View>
-  </TouchableOpacity>
-);
+const MenuButton = ({
+  title,
+  subtitle,
+  icon,
+  color,
+  iconColor,
+  href,
+}: {
+  title: string;
+  subtitle: string;
+  icon: keyof typeof MaterialCommunityIcons.glyphMap;
+  color: string;
+  iconColor: string;
+  href?: string;
+}) => {
+  const router = useRouter();
+
+  const handlePress = () => {
+    if (href) {
+      router.push(href as any);
+    }
+  };
+
+  return (
+    <TouchableOpacity style={styles.card} onPress={handlePress}>
+      <View style={[styles.iconContainer, { backgroundColor: color }]}>
+        <MaterialCommunityIcons name={icon} size={40} color={iconColor} />
+      </View>
+      <View style={styles.cardTextContainer}>
+        <Text style={styles.cardTitle}>{title}</Text>
+        <Text style={styles.cardSubtitle}>{subtitle}</Text>
+      </View>
+    </TouchableOpacity>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F5F7FA',
+    backgroundColor: "#F5F7FA",
   },
   header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
     paddingHorizontal: 20,
     paddingTop: 20,
-    backgroundColor: '#FFECC7',
+    backgroundColor: "#FFECC7",
     paddingBottom: 30,
     borderBottomLeftRadius: 20,
     borderBottomRightRadius: 20,
   },
   sosButton: {
-    backgroundColor: '#E53935',
+    backgroundColor: "#E53935",
     width: 70,
     height: 70,
     borderRadius: 35,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     elevation: 5,
   },
   sosText: {
-    color: 'white',
-    fontWeight: 'bold',
+    color: "white",
+    fontWeight: "bold",
     fontSize: 18,
   },
   greetingContainer: {
@@ -131,43 +165,43 @@ const styles = StyleSheet.create({
   },
   greetingTitle: {
     fontSize: 28,
-    color: '#333',
+    color: "#333",
   },
   userName: {
     fontSize: 32,
-    fontWeight: 'bold',
-    color: '#333',
+    fontWeight: "bold",
+    color: "#333",
   },
   avatarPlaceholder: {
     width: 65,
     height: 65,
     borderRadius: 32.5,
-    backgroundColor: 'white',
-    justifyContent: 'center',
-    alignItems: 'center',
+    backgroundColor: "white",
+    justifyContent: "center",
+    alignItems: "center",
     borderWidth: 2,
-    borderColor: '#eee',
+    borderColor: "#eee",
   },
   subGreeting: {
     fontSize: 20,
-    textAlign: 'center',
+    textAlign: "center",
     marginVertical: 20,
-    color: '#444',
+    color: "#444",
   },
   menuList: {
     paddingHorizontal: 20,
     paddingBottom: 100,
   },
   card: {
-    display: 'flex',
-    flexDirection: 'row',
-    backgroundColor: 'white',
+    display: "flex",
+    flexDirection: "row",
+    backgroundColor: "white",
     borderRadius: 20,
     padding: 15,
     marginBottom: 15,
-    alignItems: 'center',
+    alignItems: "center",
     elevation: 2,
-    shadowColor: '#000',
+    shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 4,
@@ -176,8 +210,8 @@ const styles = StyleSheet.create({
     width: 70,
     height: 70,
     borderRadius: 15,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     marginRight: 15,
   },
   cardTextContainer: {
@@ -185,37 +219,37 @@ const styles = StyleSheet.create({
   },
   cardTitle: {
     fontSize: 18,
-    fontWeight: '800',
-    color: '#222',
+    fontWeight: "800",
+    color: "#222",
   },
   cardSubtitle: {
     fontSize: 14,
-    color: '#666',
+    color: "#666",
     marginTop: 2,
   },
   footer: {
-    flexDirection: 'row',
+    flexDirection: "row",
     height: 80,
-    backgroundColor: '#FFD180',
-    position: 'absolute',
+    backgroundColor: "#FFD180",
+    position: "absolute",
     bottom: 0,
-    width: '100%',
-    alignItems: 'center',
+    width: "100%",
+    alignItems: "center",
   },
   footerItem: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
   },
   footerText: {
     fontSize: 14,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginTop: 5,
   },
   divider: {
     width: 1,
-    height: '60%',
-    backgroundColor: '#333',
+    height: "60%",
+    backgroundColor: "#333",
     opacity: 0.2,
   },
 });
