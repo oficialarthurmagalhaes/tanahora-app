@@ -43,4 +43,4 @@ app-example
 /android
 
 #config
-firebaseConfig.js
+app/config/firebaseConfig.js
