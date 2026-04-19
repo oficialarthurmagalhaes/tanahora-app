@@ -1,5 +1,4 @@
 import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
 import { getFirestore } from "firebase/firestore";
 
 // TODO: Add SDKs for Firebase products that you want to use
@@ -13,10 +12,9 @@ const firebaseConfig = {
   storageBucket: "app-tanahora.firebasestorage.app",
   messagingSenderId: "1094063141262",
   appId: "1:1094063141262:web:5201815b181a87dc1bb4df",
-  measurementId: "G-SSBMBW7WKZ"
+  measurementId: "G-SSBMBW7WKZ",
 };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
 export const db = getFirestore(app);
