@@ -7,7 +7,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 // Importe a configuração do Firebase
 import { addDoc, collection } from "firebase/firestore";
-import { db } from "./config/firebaseConfig";
+import { db } from "../config/firebaseConfig";
 
 export default function App() {
   // 1. Estados separados para cada campo

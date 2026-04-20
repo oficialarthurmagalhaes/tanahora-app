@@ -82,14 +82,7 @@ export default function App() {
 }
 
 // Componente de Botão Customizado
-const MenuButton = ({
-  title,
-  subtitle,
-  icon,
-  color,
-  iconColor,
-  href,
-}: {
+const MenuButton = ({title,subtitle,icon,color,iconColor,href,}: {
   title: string;
   subtitle: string;
   icon: keyof typeof MaterialCommunityIcons.glyphMap;
