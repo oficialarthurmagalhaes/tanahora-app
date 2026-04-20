@@ -13,6 +13,7 @@ export default function App() {
   // 1. Estados separados para cada campo
   const [nome, setNome] = useState("");
   const [dosagem, setDosagem] = useState("");
+  const [horario, setHorario] = useState("");
   const [intervalo, setIntervalo] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
   const successTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -35,9 +36,9 @@ export default function App() {
 
   // 2. Função para salvar no Firebase
   const handleCadastro = async () => {
-    console.log("handleCadastro acionado", { nome, dosagem, intervalo });
+    console.log("handleCadastro acionado", { nome, dosagem, horario, intervalo });
 
-    if (!nome || !dosagem || !intervalo) {
+    if (!nome || !dosagem || !horario || !intervalo ) {
       showMessage("Erro", "Preencha todos os campos!");
       return;
     }
@@ -46,6 +47,7 @@ export default function App() {
       await addDoc(collection(db, "medicamentos"), {
         nome: nome,
         dosagem: dosagem,
+        horario: horario,
         intervalo: intervalo,
         createdAt: new Date(),
       });
@@ -61,6 +63,7 @@ export default function App() {
       // Limpar campos
       setNome("");
       setDosagem("");
+      setHorario("");
       setIntervalo("");
     } catch (e) {
       console.error("Erro ao adicionar: ", e);
@@ -94,6 +97,13 @@ export default function App() {
           value={dosagem}
           onChangeText={setDosagem} // Atualiza o estado dosagem
         />
+        <Text style={styles.label}>HORÁRIO</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="Ex: 12:00h"
+          value={horario}
+          onChangeText={setHorario} // Atualiza o estado intervalo
+        />
         <Text style={styles.label}>INTERVALO</Text>
         <TextInput
           style={styles.input}
@@ -101,10 +111,7 @@ export default function App() {
           value={intervalo}
           onChangeText={setIntervalo} // Atualiza o estado intervalo
         />
-        <TouchableOpacity
-          style={styles.buttonCadastrar}
-          onPress={handleCadastro}
-        >
+        <TouchableOpacity style={styles.buttonCadastrar} onPress={handleCadastro}>
           <Text style={styles.text}>CADASTRAR MEDICAMENTO</Text>
           <Ionicons name="add-circle" size={24} color="#f0f0f0" />
         </TouchableOpacity>
