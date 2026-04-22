@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, FlatList, StyleSheet, ActivityIndicator } from "react-native";
+import { View, Text, FlatList, StyleSheet, ActivityIndicator, TouchableOpacity } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Ionicons } from "@expo/vector-icons";
-import { Link } from "expo-router";
+import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
+import { useNavigation, useRouter } from "expo-router";
+import { StatusBar } from "expo-status-bar";
+
 
 // Importe sua configuração
 import { collection, onSnapshot, query, orderBy } from "firebase/firestore";
 import { db } from "../config/firebaseConfig";
+import { navigate } from "expo-router/build/global-state/routing";
 
 // Interface para TypeScript (opcional, mas recomendado)
 interface Medicamento {
@@ -20,6 +23,8 @@ interface Medicamento {
 export default function ListaMedicamentos() {
   const [medicamentos, setMedicamentos] = useState<Medicamento[]>([]);
   const [loading, setLoading] = useState(true);
+  //Para utilizar a navegação entre telas
+  const router = useRouter();
 
   useEffect(() => {
     // Criamos uma consulta ordenada pela data de criação (se você salvou createdAt)
@@ -59,15 +64,19 @@ export default function ListaMedicamentos() {
       </View>
     </View>
   );
-
   return (
     <SafeAreaView style={styles.container}>
+      <StatusBar style="auto" />
       <View style={styles.header}>
-        <Link href={"/"}>
+        <TouchableOpacity onPress={() => router.navigate('/')}>
           <Ionicons name="arrow-back-outline" size={30} color="black" />
-        </Link>
-        <Text style={styles.headerTitle}>Meus Remédios</Text>
-        <View style={{ width: 30 }} />
+        </TouchableOpacity>
+
+        <Text style={styles.headerTitle}>MEUS REMÉDIOS</Text>
+        
+        <TouchableOpacity style={styles.botaoCadastrarRemedio} onPress={() => router.navigate('/(tabs)/cadastro-remedio')}>
+          <MaterialCommunityIcons name="plus-circle" size={24} color="white" />
+        </TouchableOpacity>
       </View>
 
       {loading ? (
@@ -113,6 +122,15 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 4,
+  },
+  botaoCadastrarRemedio: {
+    backgroundColor: "#E53935",
+    width: 60,
+    height: 60,
+    borderRadius: 35,
+    justifyContent: "center",
+    alignItems: "center",
+    elevation: 5,
   },
   iconContainer: {
     width: 60,
