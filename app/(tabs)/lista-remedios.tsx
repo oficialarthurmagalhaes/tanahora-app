@@ -9,7 +9,6 @@ import { StatusBar } from "expo-status-bar";
 // Importe sua configuração
 import { collection, onSnapshot, query, orderBy } from "firebase/firestore";
 import { db } from "../config/firebaseConfig";
-import { navigate } from "expo-router/build/global-state/routing";
 
 // Interface para TypeScript (opcional, mas recomendado)
 interface Medicamento {
@@ -25,6 +24,8 @@ export default function ListaMedicamentos() {
   const [loading, setLoading] = useState(true);
   //Para utilizar a navegação entre telas
   const router = useRouter();
+  //Para utilizar a navegação para tela anterior
+  const navigation = useNavigation();
 
   useEffect(() => {
     // Criamos uma consulta ordenada pela data de criação (se você salvou createdAt)
@@ -68,14 +69,14 @@ export default function ListaMedicamentos() {
     <SafeAreaView style={styles.container}>
       <StatusBar style="auto" />
       <View style={styles.header}>
-        <TouchableOpacity onPress={() => router.navigate('/')}>
+        <TouchableOpacity onPress={() => navigation.goBack()}>
           <Ionicons name="arrow-back-outline" size={30} color="black" />
         </TouchableOpacity>
 
         <Text style={styles.headerTitle}>MEUS REMÉDIOS</Text>
         
         <TouchableOpacity style={styles.botaoCadastrarRemedio} onPress={() => router.navigate('/(tabs)/cadastro-remedio')}>
-          <MaterialCommunityIcons name="plus-circle" size={24} color="white" />
+          <MaterialCommunityIcons name="plus" size={50} color="white" />
         </TouchableOpacity>
       </View>
 
