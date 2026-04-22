@@ -44,6 +44,7 @@ export default function App() {
           icon="file-document-outline"
           color="#E8F5E9"
           iconColor="#388E3C"
+          href="/lista-receitas"
         />
         <MenuButton
           title="CALENDÁRIO"
