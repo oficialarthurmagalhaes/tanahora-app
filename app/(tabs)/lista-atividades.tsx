@@ -12,7 +12,7 @@ import { db } from "../config/firebaseConfig";
 interface Exercicio {
   id: string;
   nome: string;
-  duracaoReps: string; // Ex: "15min" ou "10 reps"
+  duracaoReps: string;
   descricao: string;
   concluido?: boolean;
 }
@@ -71,7 +71,6 @@ export default function ListaExercicios() {
     <SafeAreaView style={styles.container}>
       <StatusBar style="auto" />
 
-      {/* Header mantendo o estilo de saudação, mas para Exercícios */}
 <View style={styles.header}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <Ionicons name="arrow-back-outline" size={30} color="black" />
@@ -99,7 +98,6 @@ export default function ListaExercicios() {
           }
         />
       )}
-      {/* RODAPÉ IDÊNTICO À SUA HOME */}
       <View style={styles.footer}>
         <TouchableOpacity 
           style={styles.footerItem} 
@@ -205,7 +203,6 @@ const styles = StyleSheet.create({
   },
   floatingButtonText: { color: 'white', fontWeight: 'bold', fontSize: 15 },
 
-  // RODAPÉ LARANJA (IDÊNTICO À HOME)
   footer: {
     flexDirection: "row",
     height: 80,
