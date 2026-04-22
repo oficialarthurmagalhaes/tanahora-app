@@ -10,18 +10,15 @@ export default function AlarmScreen() {
     <SafeAreaView style={styles.container}>
       <StatusBar style="dark" />
       
-      {/* Horário e Título */}
       <View style={styles.header}>
         <Text style={styles.clockText}>12:00</Text>
         <Text style={styles.subtitle}>PRÓXIMO REMÉDIO</Text>
       </View>
 
-      {/* Card do Medicamento */}
       <View style={styles.card}>
         <Text style={styles.medName}>ANLODIPINO</Text>
         
         <View style={styles.imageContainer}>
-          {/* Representação visual da caixa e comprimido */}
           <MaterialCommunityIcons name="package-variant" size={80} color="#5C6BC0" />
           <MaterialCommunityIcons name="pill" size={80} color="#D1D1D1" />
         </View>
@@ -36,7 +33,6 @@ export default function AlarmScreen() {
         </View>
       </View>
 
-      {/* Área do Slide para Confirmar */}
       <View style={styles.slideArea}>
         <Text style={styles.slideInstructions}>
           DESLIZE PARA CONFIRMAR QUE TOMOU →
@@ -49,7 +45,6 @@ export default function AlarmScreen() {
         </View>
       </View>
 
-      {/* Ilustração da Mão (Simulada com ícone ou placeholder) */}
       <View style={styles.handContainer}>
          <FontAwesome5 name="hand-holding" size={100} color="#F5CBA7" />
       </View>

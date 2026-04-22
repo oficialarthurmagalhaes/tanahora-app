@@ -1,10 +1,14 @@
 import {FontAwesome5, Ionicons, MaterialCommunityIcons,} from "@expo/vector-icons";
-import { useRouter } from "expo-router";
+import { useNavigation, useRouter } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import {ScrollView, StyleSheet, Text, TouchableOpacity, View,} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function App() {
+  //Para utilizar a navegação entre telas
+  const router = useRouter();
+  //Para utilizar a navegação para tela anterior
+  const navigation = useNavigation();
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar style="auto" />
@@ -62,9 +66,8 @@ export default function App() {
         />
       </ScrollView>
 
-      {/* Rodapé - Atividade Física e Média de Água */}
       <View style={styles.footer}>
-        <TouchableOpacity style={styles.footerItem}>
+        <TouchableOpacity style={styles.footerItem} onPress={()=> router.navigate('/(tabs)/lista-atividades')}>
           <FontAwesome5 name="dumbbell" size={28} color="black" />
           <Text style={styles.footerText}>ATIVIDADE</Text>
         </TouchableOpacity>
