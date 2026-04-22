@@ -1,64 +1,73 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, FlatList, StyleSheet, ActivityIndicator, TouchableOpacity } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
+import { FontAwesome5, Ionicons, MaterialCommunityIcons, Fontisto } from "@expo/vector-icons";
 import { useNavigation, useRouter } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 
 
 // Importe sua configuração
-import { collection, onSnapshot, query, orderBy } from "firebase/firestore";
+import { collection, onSnapshot, query, orderBy, Timestamp } from "firebase/firestore";
 import { db } from "../config/firebaseConfig";
 
 // Interface para TypeScript (opcional, mas recomendado)
-interface Medicamento {
+interface Receita {
   id: string;
-  nome: string;
-  dosagem: string;
-  horario: string;
-  intervalo: string;
+  nomeMedico: string;
+  crm: string;
+  especialidade: string;
+  medicamentos: string;
+  paciente: string;
+  data: string;
 }
 
 export default function ListaReceitas() {
-  const [medicamentos, setMedicamentos] = useState<Medicamento[]>([]);
+  const [receitas, setReceitas] = useState<Receita[]>([]);
   const [loading, setLoading] = useState(true);
+  
   //Para utilizar a navegação entre telas
   const router = useRouter();
+  //Para utilizar a navegação para a tela anterior
+  const navigation = useNavigation();
 
   useEffect(() => {
     // Criamos uma consulta ordenada pela data de criação (se você salvou createdAt)
-    const q = query(collection(db, "medicamentos"), orderBy("createdAt", "desc"));
+    const q = query(collection(db, "receitas"), orderBy("createdAt", "desc"));
 
     // Listener em tempo real
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
-      const lista: Medicamento[] = [];
+      const lista: Receita[] = [];
       querySnapshot.forEach((doc) => {
-        lista.push({ id: doc.id, ...doc.data() } as Medicamento);
+        lista.push({ id: doc.id, ...doc.data() } as Receita);
       });
       
-      setMedicamentos(lista);
+      setReceitas(lista);
       setLoading(false);
     }, (error) => {
-      console.error("Erro ao buscar medicamentos:", error);
+      console.error("Erro ao buscar receitas:", error);
       setLoading(false);
     });
 
     return () => unsubscribe(); // Desativa o listener ao sair da tela
   }, []);
 
-  const renderItem = ({ item }: { item: Medicamento }) => (
+  const renderItem = ({ item }: { item: Receita }) => (
     <View style={styles.card}>
       <View style={[styles.iconContainer, { backgroundColor: "#E3F2FD" }]}>
-        <Ionicons name="medical" size={30} color="#1976D2" />
+        <FontAwesome5 name="file-medical" size={30} color="#1976D2" />
       </View>
-      
+
       <View style={styles.cardTextContainer}>
-        <Text style={styles.cardTitle}>{item.nome}</Text>
-        <Text style={styles.cardSubtitle}>Dosagem: {item.dosagem}</Text>
+        <Text style={styles.cardTitle}>Dr.{item.nomeMedico}</Text>
+        <Text style={styles.cardSubtitle}>{item.especialidade}</Text>
         
         <View style={styles.infoRow}>
-          <Ionicons name="time-outline" size={14} color="#666" />
-          <Text style={styles.infoText}> {item.horario} - {item.intervalo}</Text>
+          <Fontisto name="date" size={14} color="#666" />
+          <Text style={styles.infoText}> - {item.data}</Text>
+        </View>
+
+        <View style={styles.infoRow}>
+            <Text style={styles.infoText}>Medicamentos: {item.medicamentos}</Text>
         </View>
       </View>
     </View>
@@ -67,11 +76,11 @@ export default function ListaReceitas() {
     <SafeAreaView style={styles.container}>
       <StatusBar style="auto" />
       <View style={styles.header}>
-        <TouchableOpacity onPress={() => router.navigate('/')}>
+        <TouchableOpacity onPress={() => navigation.goBack()}>
           <Ionicons name="arrow-back-outline" size={30} color="black" />
         </TouchableOpacity>
 
-        <Text style={styles.headerTitle}>MEUS REMÉDIOS</Text>
+        <Text style={styles.headerTitle}>MINHAS RECEITAS</Text>
         
         <TouchableOpacity style={styles.botaoCadastrarRemedio} onPress={() => router.navigate('/(tabs)/cadastro-remedio')}>
           <MaterialCommunityIcons name="plus-circle" size={24} color="white" />
@@ -82,7 +91,7 @@ export default function ListaReceitas() {
         <ActivityIndicator size="large" color="#E53935" style={{ marginTop: 50 }} />
       ) : (
         <FlatList
-          data={medicamentos}
+          data={receitas}
           keyExtractor={(item) => item.id}
           renderItem={renderItem}
           contentContainerStyle={styles.listContent}
