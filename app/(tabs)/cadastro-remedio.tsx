@@ -1,5 +1,5 @@
 import { Ionicons } from "@expo/vector-icons";
-import { Link } from "expo-router";
+import { useNavigation } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import React, { useEffect, useRef, useState } from "react";
 import {Alert, Platform, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View,} from "react-native";
@@ -9,7 +9,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { addDoc, collection } from "firebase/firestore";
 import { db } from "../config/firebaseConfig";
 
-export default function App() {
+export default function CadastroMedicamento() {
   // 1. Estados separados para cada campo
   const [nome, setNome] = useState("");
   const [dosagem, setDosagem] = useState("");
@@ -17,6 +17,8 @@ export default function App() {
   const [intervalo, setIntervalo] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
   const successTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const navigation = useNavigation();
 
   useEffect(() => {
     return () => {
@@ -74,11 +76,11 @@ export default function App() {
     <SafeAreaView style={styles.container}>
       <StatusBar style="auto" />
 
-      {/* Cabeçalho - Saudação e SOS */}
+      {/* Cabeçalho*/}
       <View style={styles.header}>
-        <Link href={"/"}>
+        <TouchableOpacity onPress={() => navigation.goBack()}>
           <Ionicons name="arrow-back-outline" size={36} color="black" />
-        </Link>
+        </TouchableOpacity>
       </View>
 
       {/* Menu Principal */}
