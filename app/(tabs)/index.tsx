@@ -63,19 +63,17 @@ export default function App() {
 
       {/* Rodapé - Atividade Física e Média de Água */}
       <View style={styles.footer}>
-        {/* <Link href="" asChild> */}
         <TouchableOpacity style={styles.footerItem}>
           <FontAwesome5 name="dumbbell" size={28} color="black" />
           <Text style={styles.footerText}>ATIVIDADE</Text>
         </TouchableOpacity>
-        {/* </Link> */}
+
         <View style={styles.divider} />
-        {/* <Link href="" asChild> */}
+        
         <TouchableOpacity style={styles.footerItem}>
           <Ionicons name="water-outline" size={30} color="black" />
           <Text style={styles.footerText}>ÁGUA</Text>
         </TouchableOpacity>
-        {/* </Link> */}
       </View>
     </SafeAreaView>
   );

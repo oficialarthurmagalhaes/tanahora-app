@@ -17,7 +17,7 @@ export default function CadastroMedicamento() {
   const [intervalo, setIntervalo] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
   const successTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
-
+  //Para utilizar a navegação para a tela anterior
   const navigation = useNavigation();
 
   useEffect(() => {
